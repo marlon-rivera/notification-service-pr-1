@@ -22,4 +22,9 @@ public class NotificationHandler implements INotificationHandler {
     public boolean validateConfirmationCode(Long idOrder, String code) {
         return notificationServicePort.validateConfirmationCode(idOrder, code);
     }
+
+    @Override
+    public void sendNotificationCancelOrder(String phoneNumber) {
+        notificationServicePort.sendNotificationCancelOrder(phoneNumber);
+    }
 }

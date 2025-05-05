@@ -15,14 +15,7 @@ public class NotificationUseCase implements INotificationServicePort {
 
     @Override
     public void sendConfirmationCode(Long idOrder, String phoneNumber) {
-        if(!phoneNumber.startsWith(NotificationUseCaseConstants.PLUS + NotificationUseCaseConstants.INDICATIVE)) {
-            if(phoneNumber.startsWith(NotificationUseCaseConstants.INDICATIVE)) {
-                phoneNumber = NotificationUseCaseConstants.PLUS + phoneNumber;
-            }
-            else {
-                phoneNumber = NotificationUseCaseConstants.PLUS + NotificationUseCaseConstants.INDICATIVE + phoneNumber;
-            }
-        }
+        phoneNumber = validatePhoneNumberFormat(phoneNumber);
         String code = String.valueOf(generateConfirmationCode());
         String message  =String.format(
                 NotificationUseCaseConstants.CONFIRMATION_CODE_MESSAGE,
@@ -40,8 +33,32 @@ public class NotificationUseCase implements INotificationServicePort {
         return confirmationCode.equals(code);
     }
 
+    @Override
+    public void sendNotificationCancelOrder(String phoneNumber) {
+        phoneNumber = validatePhoneNumberFormat(phoneNumber);
+        notificationPersistencePort.sendNotificationCancelOrder(
+                phoneNumber,
+                NotificationUseCaseConstants.MESSAGE_CANCEL_ORDER_NOTIFICATION
+        );
+    }
+
     private int generateConfirmationCode() {
         return NotificationUseCaseConstants.MIN_CONFIRMATION_CODE +
                 random.nextInt(NotificationUseCaseConstants.MAX_CONFIRMATION_CODE);
+    }
+
+    private String validatePhoneNumberFormat(String phoneNumber){
+        String phoneNumberFinal = "";
+        if(!phoneNumber.startsWith(NotificationUseCaseConstants.PLUS + NotificationUseCaseConstants.INDICATIVE)) {
+            if(phoneNumber.startsWith(NotificationUseCaseConstants.INDICATIVE)) {
+                phoneNumberFinal = NotificationUseCaseConstants.PLUS + phoneNumber;
+            }
+            else {
+                phoneNumberFinal = NotificationUseCaseConstants.PLUS + NotificationUseCaseConstants.INDICATIVE + phoneNumber;
+            }
+        }else {
+            phoneNumberFinal = phoneNumber;
+        }
+        return phoneNumberFinal;
     }
 }

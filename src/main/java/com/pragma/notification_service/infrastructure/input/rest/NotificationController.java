@@ -67,4 +67,25 @@ public class NotificationController {
         ));
     }
 
+    @Operation(
+            summary = NotificationControllerOpenApiConstants.CANCEL_CONFIRMATION_CODE_SUMMARY,
+            description = NotificationControllerOpenApiConstants.CANCEL_CONFIRMATION_CODE_DESCRIPTION,
+            responses = {
+                    @ApiResponse(
+                            responseCode = ResponsesCodes.OK,
+                            description = NotificationControllerOpenApiConstants.CANCEL_CONFIRMATION_CODE_RESPONSE_200_DESCRIPTION
+                    ),
+                    @ApiResponse(
+                            responseCode = ResponsesCodes.BAD_REQUEST,
+                            description = NotificationControllerOpenApiConstants.CANCEL_CONFIRMATION_CODE_RESPONSE_400_DESCRIPTION
+                    )
+            }
+    )
+    @PostMapping("/cancel/{phoneNumber}")
+    public ResponseEntity<Void> sendNotificationCancel(
+            @PathVariable String phoneNumber
+    ) {
+        notificationHandler.sendNotificationCancelOrder(phoneNumber);
+        return ResponseEntity.ok().build();
+    }
 }

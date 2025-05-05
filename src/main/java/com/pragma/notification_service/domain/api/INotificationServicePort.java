@@ -4,5 +4,6 @@ public interface INotificationServicePort {
 
     void sendConfirmationCode(Long idOrder, String phoneNumber);
     boolean validateConfirmationCode(Long idOrder, String code);
+    void sendNotificationCancelOrder(String phoneNumber);
 
 }
