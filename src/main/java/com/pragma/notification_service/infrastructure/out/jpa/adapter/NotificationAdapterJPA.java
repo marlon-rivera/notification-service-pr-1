@@ -30,4 +30,13 @@ public class NotificationAdapterJPA implements INotificationPersistencePort {
     public String getConfirmationCode(Long idOrder) {
         return notificationCodeRepository.findByIdOrder(idOrder).getConfirmationCode();
     }
+
+    @Override
+    public void sendNotificationCancelOrder(String phoneNumber, String message) {
+        Message.creator(
+                new PhoneNumber(phoneNumber),
+                new PhoneNumber(phoneNumberTwilio),
+                message
+        ).create();
+    }
 }

@@ -11,5 +11,6 @@ public class NotificationUseCaseConstants {
     public static final int MAX_CONFIRMATION_CODE = 999999;
     public static final String INDICATIVE = "57";
     public static final String PLUS = "+";
+    public static final String MESSAGE_CANCEL_ORDER_NOTIFICATION = "Your order can't be canceled because it has already in the process of making the food";
 
 }

@@ -6,5 +6,6 @@ public interface INotificationHandler {
 
     void sendConfirmationCode(NotificationSendDto notificationSendDto);
     boolean validateConfirmationCode(Long idOrder, String code);
+    void sendNotificationCancelOrder(String phoneNumber);
 
 }
